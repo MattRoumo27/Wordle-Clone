@@ -1,0 +1,92 @@
+.App {
+  text-align: center;
+  color: white;
+}
+
+body {
+  margin: 0%;
+  padding: 0%;
+  background-color: #121213;
+}
+
+.header {
+  flex: 10%;
+  border-bottom: 0.1px solid #3a3a3c;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .title {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700;
+  font-size: 37px;
+  line-height: 100%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.letterGrid {
+  flex: 50%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 250px;
+  flex-direction: column;
+}
+
+.letterGrid .row {
+  display: flex;
+}
+
+.letterTile {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 65px;
+  font-size: 18px;
+  margin: 3px;
+  border: 1.5px solid #3a3a3c;
+  box-sizing: border-box;
+  cursor:default;
+  font-size: 30px;
+}
+
+.keyboardGrid {
+  padding-top: 100px;
+  flex: 40%;
+}
+
+.keyboardTile {
+  display: inline-block;
+  place-items: center;
+  width: 55px;
+  height: 65px;
+  font-size: 14px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.keyboardTile button {
+  background-color: #818384;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  text-align: center;
+  border: none;
+  color:white;
+  cursor: pointer;
+}
+
+.keyboardTile button:hover {
+  background-color: #999a9b;
+}
+
+.keyboardTile button:active {
+  background-color: #999a9b;
+  transform: translateY(1px);
+}
