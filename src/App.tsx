@@ -57,11 +57,15 @@ const App: React.FC = () => {
       wordLength
     );
 
-    const boardState: [boolean, GameBoard] = Validator.CheckSubmission(currentBoard);
+    const boardState: [boolean, GameBoard, string] = Validator.CheckSubmission(currentBoard);
     const isValidInput: boolean = boardState[0];
     const board: GameBoard = boardState[1];
+    const errorMessage: string = boardState[2];
 
-    if (!isValidInput) return;
+    if (!isValidInput) {
+      alert(errorMessage);
+      return;
+    }
 
     let keyboardTileManager = new KeyboardTileManager(keyboardTiles, board[guessNum]);
     keyboardTileManager.UpdateKeyTiles();

@@ -1,6 +1,7 @@
 import { GameBoard } from "../types/types";
 import Color from "../enums/Color";
 import IGuessTile from "../interfaces/IGuessTile";
+import words from "../words";
 
 interface SolutionModel {
   letter: string;
@@ -20,30 +21,50 @@ class SubmissionValidator {
     this.wordLength = wordLength;
   }
 
-  CheckSubmission(gameBoard: GameBoard): [boolean, GameBoard] {
+  CheckSubmission(gameBoard: GameBoard): [boolean, GameBoard, string] {
     let newGameBoard = gameBoard;
     let isValid = true;
+    let errorMessage = "";
 
     const isGuessAValidLength: boolean = this.CompareLengths();
     if (!isGuessAValidLength) {
       isValid = false;
-      return [isValid, gameBoard];
+      errorMessage = `You must enter a ${this.wordLength} letter word`;
+      return [isValid, gameBoard, errorMessage];
+    }
+
+    const isGuessAValidEnglishWord: boolean = this.CheckIfEnglishWord();
+    if (!isGuessAValidEnglishWord) {
+      isValid = false;
+      errorMessage = `This is not a word in the English language or it does not appear in our solution set, please try another`;
+      return [isValid, gameBoard, errorMessage];
     }
 
     newGameBoard = this.MarkGreenTiles(newGameBoard);
     newGameBoard = this.MarkYellowTiles(newGameBoard);
     newGameBoard = this.MarkDarkGrayTiles(newGameBoard);
 
-    return [isValid, newGameBoard];
+    return [isValid, newGameBoard, errorMessage];
   }
 
   CompareLengths(): boolean {
     if (this.guess.length !== this.wordLength) {
-      alert(`You must enter a ${this.wordLength} letter word`);
       return false;
     } else {
       return true;
     }
+  }
+
+  CheckIfEnglishWord(): boolean {
+    let result = false;
+
+    for (let i = 0; i < words.length; i++) {
+      if (this.guess.toUpperCase() === words[i].toUpperCase()) {
+        result = true;
+      }
+    }
+
+    return result;
   }
 
   // Mark the tiles that are in the correct spot as Green to give a visual indication to the user
