@@ -1,4 +1,4 @@
-import GameBoard from "../types/types";
+import { GameBoard } from "../types/types";
 import IKeyTile from "../interfaces/IKeyTile";
 
 interface IKeyPressEvent {

@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import KeyRow from "./KeyRow";
 import IKeyTile from "../../interfaces/IKeyTile";
-import StandardKeyboardTiles from "./StandardKeyboardTiles";
+import { KeyboardLayout } from "../../types/types";
 
 interface Props {
+  keyboardTiles: KeyboardLayout;
   keyPressEvent: (tilePressed: IKeyTile) => void;
 }
 
-const KeyboardGrid: React.FC<Props> = ({ keyPressEvent }) => {
-  const [tiles] = useState<IKeyTile[][]>(StandardKeyboardTiles);
-
+const KeyboardGrid: React.FC<Props> = ({ keyboardTiles, keyPressEvent }) => {
   return (
     <div className="keyboardGrid">
-      {tiles.map((row: Array<IKeyTile>, rowIndex: number) => {
+      {keyboardTiles.map((row: Array<IKeyTile>, rowIndex: number) => {
         return <KeyRow key={rowIndex} row={row} keyPressEvent={keyPressEvent} />;
       })}
     </div>

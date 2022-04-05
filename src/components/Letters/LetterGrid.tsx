@@ -1,6 +1,6 @@
 import React from "react";
 import LetterRow from "./LetterRow";
-import GameBoard from "../../types/types";
+import { GameBoard } from "../../types/types";
 import IGuessTile from "../../interfaces/IGuessTile";
 
 interface Props {

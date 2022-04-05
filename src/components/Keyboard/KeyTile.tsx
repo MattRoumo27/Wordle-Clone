@@ -8,7 +8,7 @@ interface Props {
 
 const KeyTile: React.FC<Props> = ({ tile, keyPressEvent }) => {
   return (
-    <div className="keyboardTile">
+    <div className={tile.isDisabled ? "disabledKeyboardTile" : "keyboardTile"}>
       <button
         style={{ backgroundColor: tile.color }}
         disabled={tile.isDisabled}

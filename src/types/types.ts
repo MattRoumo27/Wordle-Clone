@@ -1,5 +1,5 @@
 import IGuessTile from "../interfaces/IGuessTile";
+import IKeyTile from "../interfaces/IKeyTile";
 
-type GameBoard = IGuessTile[][];
-
-export default GameBoard;
+export type GameBoard = IGuessTile[][];
+export type KeyboardLayout = IKeyTile[][];

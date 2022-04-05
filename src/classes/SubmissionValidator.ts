@@ -1,4 +1,4 @@
-import GameBoard from "../types/types";
+import { GameBoard } from "../types/types";
 import Color from "../enums/Color";
 import IGuessTile from "../interfaces/IGuessTile";
 

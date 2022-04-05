@@ -1,6 +1,6 @@
 import Key from "../enums/Key";
 import IKeyTile from "../interfaces/IKeyTile";
-import GameBoard from "../types/types";
+import { GameBoard } from "../types/types";
 import IKeyPressEvent from "../interfaces/IKeyPressEvent";
 
 class KeyPressEventHandler {
