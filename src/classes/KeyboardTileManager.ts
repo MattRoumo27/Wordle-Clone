@@ -2,6 +2,7 @@ import { KeyboardLayout } from "../types/types";
 import IGuessTile from "../interfaces/IGuessTile";
 import IKeyTile from "../interfaces/IKeyTile";
 import Color from "../enums/Color";
+import Key from "../enums/Key";
 
 class KeyboardTileManager {
   keyboard: KeyboardLayout;
@@ -33,10 +34,12 @@ class KeyboardTileManager {
     }
   }
 
-  DisableAllKeys(): void {
+  DisableAllKeysExceptEnter(): void {
     for (let row = 0; row < this.keyboard.length; row++) {
       for (let column = 0; column < this.keyboard[row].length; column++) {
-        this.keyboard[row][column].isDisabled = true;
+        if (this.keyboard[row][column].letter !== Key.ENTER) {
+          this.keyboard[row][column].isDisabled = true;
+        }
       }
     }
   }
