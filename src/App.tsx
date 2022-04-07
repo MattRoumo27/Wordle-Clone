@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import Header from "./components/Header";
 import LetterGrid from "./components/Letters/LetterGrid";
 import KeyboardGrid from "./components/Keyboard/KeyboardGrid";
@@ -14,15 +15,6 @@ import KeyboardTileManager from "./classes/KeyboardTileManager";
 import words from "./words";
 import Key from "./enums/Key";
 
-interface AppState {
-  board: GameBoard;
-  guessNumber: number;
-  guess: string;
-  keyboardTiles: KeyboardLayout;
-  solution: string;
-  hasWon: boolean | null;
-}
-
 const MaximumGuesses: number = 6;
 const wordLength: number = 5;
 
@@ -30,41 +22,49 @@ const initialBoard: GameBoard = new Array(MaximumGuesses)
   .fill("")
   .map((_) => new Array(wordLength).fill("").map((_) => ({ letter: "", color: Color.None })));
 
+// Get a random word from the giant word list to use as a solution
 const generateRandomWord = (): string => {
   return words[Math.floor(Math.random() * words.length)].toUpperCase();
 };
 
-const initialState: AppState = {
-  board: initialBoard,
-  guessNumber: 0,
-  guess: "",
-  keyboardTiles: StandardKeyboardTiles,
+interface IAppState {
+  currentBoard: GameBoard;
+  guessNum: number;
+  currentGuess: string;
+  keyboardTiles: KeyboardLayout;
+  solution: string;
+  hasWon: boolean | null;
+}
+
+let initialState: IAppState = {
+  currentBoard: [],
+  guessNum: 0,
+  currentGuess: "",
+  keyboardTiles: [],
   solution: generateRandomWord(),
   hasWon: null,
 };
 
 const App: React.FC = () => {
-  const [currentBoard, setCurrentBoard] = useState<GameBoard>(initialBoard);
-  // Will use the number of guesses to determine which row to insert letters into
-  const [guessNum, setGuessNum] = useState<number>(0);
-  // Keep the user's current guess as a string object
-  const [currentGuess, setCurrentGuess] = useState<string>("");
-  const [keyboardTiles, setKeyboardTiles] = useState<KeyboardLayout>(StandardKeyboardTiles);
-  const [solution, setSolution] = useState<string>(generateRandomWord());
-  const [hasWon, setHasWon] = useState<boolean | null>(null);
+  const [{ currentBoard, guessNum, currentGuess, keyboardTiles, solution, hasWon }, setState] =
+    useState<IAppState>({
+      ...initialState,
+      currentBoard: _.cloneDeep(initialBoard),
+      keyboardTiles: _.cloneDeep(StandardKeyboardTiles),
+    });
 
   // Monitor the game state to see if the player has lost or still has additional tries
   useEffect(() => {
     if (guessNum < MaximumGuesses) {
-      setCurrentGuess("");
+      setState((prevState) => ({ ...prevState, currentGuess: "" }));
     } else if (guessNum > MaximumGuesses) {
-      setHasWon(false);
+      setState((prevState) => ({ ...prevState, hasWon: false }));
     }
   }, [guessNum]);
 
   useEffect(() => {
     if (hasWon) {
-      alert("Congrats! You have won!");
+      alert("Congrats! You have won! Close this pop-up and hit ENTER to play again!");
     } else if (hasWon === false) {
       alert("You have lost the game! Refresh to try again!");
     }
@@ -90,13 +90,16 @@ const App: React.FC = () => {
     keyboardTileManager.UpdateKeyTiles();
     if (currentGuess === solution) {
       keyboardTileManager.DisableAllKeysExceptEnter();
-      setHasWon(true);
+      setState((prevState) => ({ ...prevState, hasWon: true }));
     }
     let updatedKeyboardTiles = keyboardTileManager.GetKeyboard();
 
-    setCurrentBoard(board);
-    setGuessNum(guessNum + 1);
-    setKeyboardTiles(updatedKeyboardTiles);
+    setState((prevState) => ({
+      ...prevState,
+      currentBoard: board,
+      guessNum: guessNum + 1,
+      keyboardTiles: updatedKeyboardTiles,
+    }));
   };
 
   const keyPressEvent = (tilePressed: IKeyTile): void => {
@@ -121,18 +124,17 @@ const App: React.FC = () => {
       keyPressEventHandler.ProcessKeyEvent();
 
     if (isValid) {
-      setCurrentGuess(guess);
-      setCurrentBoard(board);
+      setState((prevState) => ({ ...prevState, currentGuess: guess, currentBoard: board }));
     }
   };
 
   const resetGame = (): void => {
-    setCurrentBoard(initialBoard);
-    setGuessNum(0);
-    setCurrentGuess("");
-    setKeyboardTiles(StandardKeyboardTiles);
-    setSolution(generateRandomWord());
-    setHasWon(null);
+    setState({
+      ...initialState,
+      currentBoard: _.cloneDeep(initialBoard),
+      keyboardTiles: _.cloneDeep(StandardKeyboardTiles),
+      solution: generateRandomWord(),
+    });
   };
 
   return (

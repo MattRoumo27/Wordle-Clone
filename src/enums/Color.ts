@@ -1,5 +1,5 @@
 enum Color {
-  None = "none",
+  None = "transparent",
   Gray = "#818384",
   DarkGray = "#3a3a3c",
   Yellow = "#b59f3b",
