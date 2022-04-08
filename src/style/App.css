@@ -11,7 +11,7 @@ body {
 
 .header {
   flex: 10%;
-  border-bottom: 0.1px solid #3a3a3c;
+  border-bottom: 0.1vw solid #3a3a3c;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -22,7 +22,7 @@ body {
 .header .title {
   font-family: 'Roboto Slab', serif;
   font-weight: 700;
-  font-size: 37px;
+  font-size: 30px;
   line-height: 100%;
   letter-spacing: 0.01em;
   text-align: center;
@@ -36,7 +36,7 @@ body {
   width: 100%;
   display: flex;
   align-items: center;
-  padding-top: 250px;
+  padding-top: 8vh;
   flex-direction: column;
 }
 
@@ -58,7 +58,7 @@ body {
 }
 
 .keyboardGrid {
-  padding-top: 100px;
+  padding-top: 2.5vh;
   flex: 40%;
 }
 
@@ -111,4 +111,37 @@ body {
   border: none;
   color:white;
   cursor: not-allowed;
+}
+
+@media screen and (max-width: 400px) {
+  .keyboardTile {
+    display: inline-block;
+    place-items: center;
+    width: 30px;
+    height: 45px;
+    font-size: 14px;
+    margin: 3px;
+    cursor: pointer;
+  }
+  
+  .keyboardTile button {
+    background-color: #818384;
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    border-radius: 4px;
+    text-align: center;
+    border: none;
+    color:white;
+    cursor: pointer;
+  }
+
+  .letterGrid {
+    flex: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 2vh;
+    flex-direction: column;
+  }
 }
