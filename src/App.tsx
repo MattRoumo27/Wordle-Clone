@@ -57,7 +57,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (guessNum < MaximumGuesses) {
       setState((prevState) => ({ ...prevState, currentGuess: "" }));
-    } else if (guessNum > MaximumGuesses) {
+    } else if (guessNum >= MaximumGuesses) {
       setState((prevState) => ({ ...prevState, hasWon: false }));
     }
   }, [guessNum]);
@@ -66,7 +66,7 @@ const App: React.FC = () => {
     if (hasWon) {
       alert("Congrats! You have won! Close this pop-up and hit ENTER to play again!");
     } else if (hasWon === false) {
-      alert("You have lost the game! Refresh to try again!");
+      alert("You have lost the game! Close this pop-up and hit ENTER to try again!");
     }
   }, [hasWon]);
 
@@ -103,7 +103,7 @@ const App: React.FC = () => {
   };
 
   const keyPressEvent = (tilePressed: IKeyTile): void => {
-    if (hasWon && tilePressed.letter === Key.ENTER) {
+    if ((hasWon === false || hasWon === true) && tilePressed.letter === Key.ENTER) {
       resetGame();
       return;
     }
